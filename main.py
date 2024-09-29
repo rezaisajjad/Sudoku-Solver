@@ -5,4 +5,6 @@ from sudoku import Solver
 reader = Reader('s1.txt')
 sudoku = Solver(reader.sudoku)
 
-print(sudoku.result)
+f = open('result.txt','wt')
+f.write(str(sudoku.result))
+f.close()
