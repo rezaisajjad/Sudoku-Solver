@@ -60,12 +60,26 @@ class Solver(object):
                         self._sudoku[i][j] = [x for x in range(1,10)]
                     return False
 
-
-
     @property
     def result(self):
         if not self._is_solved():
             self._result = self._back_track_sovle()
             if self._result == False:
                 raise Exception('Not valid game')
-        return self._sudoku
+        return self.SudoList(self._sudoku)
+    
+    class SudoList(object):
+        def __init__(self,data):
+            self.data = data
+        def __str__(self):
+            _str = []
+            for i in range(9):
+                if i%3 == 0 and i!= 0:
+                    _str.extend(['-' for _ in range(23)])
+                    _str.append('\n')
+                for j in range(9):
+                    if j%3 == 0 and j!= 0:
+                        _str.append(' | ')
+                    _str.append(f'{self.data[i][j]} ')
+                _str.append('\n')
+            return ''.join(_str)
