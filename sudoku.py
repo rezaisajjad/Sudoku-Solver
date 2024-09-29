@@ -6,7 +6,6 @@ class Solver(object):
 
     def __init__(self,sudoku) -> None:
         self._sudoku = sudoku
-        self._is_solved = False
         self._result = None
         self._init_game()
 
@@ -44,14 +43,29 @@ class Solver(object):
                     return False
         return not self._check_back_track()
 
-    def _sovle(parameter_list):
-        """
-        docstring
-        """
-        print("solving")
+    def _back_track_sovle(self) -> bool:
+        if self._check_back_track():
+            return False
+        if self._is_solved():
+            return True
+
+        for i in range(9):
+            for j in range(9):
+                _value = self._sudoku[i][j]
+                if isinstance(_value,list):
+                    for k in _value:
+                        self._sudoku[i][j] = k
+                        if self._back_track_sovle():
+                            return True
+                        self._sudoku[i][j] = [x for x in range(1,10)]
+                    return False
+
+
 
     @property
     def result(self):
-        if not self._is_solved:
-            self.__sovle__()
-        return self._result
+        if not self._is_solved():
+            self._result = self._back_track_sovle()
+            if self._result == False:
+                raise Exception('Not valid game')
+        return self._sudoku
