@@ -14,7 +14,7 @@ class Reader(object):
         docstring
         """
         for i in self._file.readlines():
-            self._data.append(i.split())
+            self._data.append([int(i) for i in i.split()])
     
     @property
     def sudoku(self):
